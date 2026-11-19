@@ -1,0 +1,27 @@
+# 本目录下永不入库的内容
+#
+# 原因：GitHub 单文件上限 100 MB，而一个精细档 final.ply 就有 120 MB。
+# 一旦被 commit 过一次，光加 .gitignore 是没用的——它还在历史里，
+# 只能用 git filter-repo 重写。所以在第一次 commit 之前就写清楚。
+
+# 模型文件（每个高斯约 248 字节，精细档轻松破百 MB）
+*.ply
+*.splat
+*.spz
+*.ksplat
+*.sog
+
+# 源素材（个人所有，无公开必要）
+*.MOV
+*.mov
+*.mp4
+*.dmg
+
+# 本地跑批留下的中间产物
+/splat-projects/
+logs/
+
+# 系统与编辑器
+.DS_Store
+*.log
+*.tmp

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 430" width="940" height="430" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', sans-serif">
+  <rect width="940" height="430" fill="#FBFAF7"/>
+  <text x="50" y="46" font-size="18" font-weight="600" fill="#2C2C2A">单个高斯的参数构成</text>
+  <text x="50" y="68" font-size="13" fill="#5F5E5A">它不是「一个点」，而是一个带朝向、带胖瘦、带方向颜色的椭球</text>
+
+  <g transform="rotate(-18 250 220)">
+    <ellipse cx="250" cy="220" rx="118" ry="74" fill="#378ADD" fill-opacity="0.14" stroke="#185FA5" stroke-width="1.3"/>
+    <ellipse cx="250" cy="220" rx="44" ry="26" fill="none" stroke="#185FA5" stroke-width="0.9" stroke-dasharray="4 3"/>
+    <line x1="132" y1="220" x2="368" y2="220" stroke="#185FA5" stroke-width="1"/>
+    <line x1="250" y1="146" x2="250" y2="294" stroke="#185FA5" stroke-width="1"/>
+    <circle cx="250" cy="220" r="3.2" fill="#0C447C"/>
+  </g>
+
+  <text x="372" y="176" font-size="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#0C447C">s₁</text>
+  <text x="238" y="132" font-size="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#0C447C">s₂</text>
+  <text x="283" y="232" font-size="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#0C447C">s₃</text>
+  <line x1="160" y1="299" x2="242" y2="230" stroke="#185FA5" stroke-width="0.7"/>
+  <text x="116" y="304" font-size="12" font-weight="600" fill="#0C447C">μ 中心</text>
+
+  <text x="50" y="330" font-size="12" fill="#5F5E5A">三个半轴长度由缩放 s 决定，椭球的朝向由旋转四元数决定。</text>
+  <text x="50" y="350" font-size="12" fill="#5F5E5A">s₃ 沿视线方向，它决定这个高斯「有多厚」——太厚会糊，太薄会漏。</text>
+  <text x="50" y="378" font-size="12" fill="#5F5E5A">投影时 3D 协方差经雅可比变换成 2D：</text>
+  <text x="50" y="400" font-size="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#185FA5">Σ₂ᴅ = J · W · Σ₃ᴅ · Wᵀ · Jᵀ</text>
+
+  <line x1="450" y1="96" x2="450" y2="404" stroke="#D3D1C7" stroke-width="1"/>
+
+  <text x="480" y="108" font-size="14" font-weight="600" fill="#2C2C2A">每个高斯存 59 个 float，对齐到 62</text>
+
+  <g font-size="13">
+    <text x="480" y="150" fill="#2C2C2A">中心位置 μ</text>
+    <text x="880" y="150" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#5F5E5A">3</text>
+    <rect x="480" y="157" width="24" height="5" rx="2.5" fill="#85B7EB"/>
+
+    <text x="480" y="192" fill="#2C2C2A">旋转四元数</text>
+    <text x="880" y="192" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#5F5E5A">4</text>
+    <rect x="480" y="199" width="32" height="5" rx="2.5" fill="#85B7EB"/>
+
+    <text x="480" y="234" fill="#2C2C2A">缩放 s₁ s₂ s₃</text>
+    <text x="880" y="234" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#5F5E5A">3</text>
+    <rect x="480" y="241" width="24" height="5" rx="2.5" fill="#85B7EB"/>
+
+    <text x="480" y="276" fill="#2C2C2A">不透明度 α</text>
+    <text x="880" y="276" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#5F5E5A">1</text>
+    <rect x="480" y="283" width="8" height="5" rx="2.5" fill="#85B7EB"/>
+
+    <text x="480" y="318" fill="#2C2C2A">球谐系数 SH（3 阶 16 基 × RGB）</text>
+    <text x="880" y="318" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1D9E75">48</text>
+    <rect x="480" y="325" width="380" height="5" rx="2.5" fill="#1D9E75"/>
+  </g>
+
+  <text x="480" y="366" font-size="12" fill="#1D9E75">77% 的存储花在球谐上 —— 它存的是「从不同方向看是什么颜色」，</text>
+  <text x="480" y="384" font-size="12" fill="#1D9E75">这是高斯泼溅比普通点云真实的核心原因。</text>
+  <text x="880" y="404" text-anchor="end" font-size="11" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#888780">59 → 62，约 248 字节</text>
+</svg>

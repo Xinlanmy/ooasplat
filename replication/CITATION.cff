@@ -1,0 +1,52 @@
+cff-version: 1.2.0
+message: "如果本仓库的实测数据或工具对你有帮助，请引用其中的算法来源（3DGS 论文）与本仓库。"
+title: "OOOSplat Replication Notes: 在 16 GB Apple Silicon Mac 上的实测与拆解"
+abstract: >-
+  记录把 OOOSplat（视频到 3D Gaussian Splatting 的本地桌面流水线）从源码跑通的完整过程，
+  包含环境搭建脚本、四次真实素材的定量实测、参数与耗时归因分析，以及一个按 COLMAP
+  真实相机位姿渲染 PLY 的轻量预览工具。
+authors:
+  - family-names: "Xinlanmy"
+    alias: "歆澜"
+    affiliation: "上海中侨职业技术大学 人工智能学院"
+date-released: "2026-11-19"
+license: "Apache-2.0"
+repository-code: "https://github.com/Xinlanmy/ooosplat-replication"
+keywords:
+  - 3D Gaussian Splatting
+  - Novel View Synthesis
+  - Structure from Motion
+  - COLMAP
+  - OOOSplat
+references:
+  - type: article
+    title: "3D Gaussian Splatting for Real-Time Radiance Field Rendering"
+    authors:
+      - family-names: "Kerbl"
+        given-names: "Bernhard"
+      - family-names: "Kopanas"
+        given-names: "Georgios"
+      - family-names: "Leimkühler"
+        given-names: "Thomas"
+      - family-names: "Drettakis"
+        given-names: "George"
+    journal: "ACM Transactions on Graphics"
+    volume: 42
+    issue: 4
+    year: 2023
+    doi: "10.1145/3592433"
+  - type: software
+    title: "OOOSplat: A local desktop app that turns videos and images into 3D Gaussian Splats in one click"
+    authors:
+      - name: "ooolabdev"
+    version: "0.8.1"
+    license: "Apache-2.0"
+    url: "https://github.com/ooolabdev/ooosplat"
+  - type: software
+    title: "COLMAP: Structure-from-Motion and Multi-View Stereo"
+    authors:
+      - family-names: "Schönberger"
+        given-names: "Johannes L."
+    version: "4.2.1"
+    license: "BSD-3-Clause"
+    url: "https://github.com/colmap/colmap"

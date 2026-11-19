@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 430" width="940" height="430" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', sans-serif">
+  <rect width="940" height="430" fill="#FBFAF7"/>
+  <text x="40" y="44" font-size="18" font-weight="600" fill="#2C2C2A">SfM：先有鸡还是先有蛋</text>
+  <text x="40" y="66" font-size="13" fill="#5F5E5A">位姿和三维点互为前提，只能交替求解。打破循环的钥匙是对极几何。</text>
+
+  <defs>
+    <marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#BA7517" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="a3b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect x="290" y="92" width="150" height="44" rx="8" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+  <text x="365" y="119" text-anchor="middle" font-size="13" font-weight="600" fill="#633806">已知位姿</text>
+  <rect x="530" y="92" width="150" height="44" rx="8" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+  <text x="605" y="119" text-anchor="middle" font-size="13" font-weight="600" fill="#633806">三维点</text>
+
+  <path d="M440 106 C 460 84, 510 84, 530 106" fill="none" stroke="#BA7517" stroke-width="1.4" marker-end="url(#a3)"/>
+  <text x="485" y="80" text-anchor="middle" font-size="12" fill="#854F0B">三角化</text>
+  <path d="M530 122 C 510 144, 460 144, 440 122" fill="none" stroke="#BA7517" stroke-width="1.4" marker-end="url(#a3)"/>
+  <text x="485" y="160" text-anchor="middle" font-size="12" fill="#854F0B">PnP 反解</text>
+
+  <text x="40" y="112" font-size="12" fill="#5F5E5A">知道位姿 → 能三角化出点</text>
+  <text x="40" y="132" font-size="12" fill="#5F5E5A">知道点 → 能反解位姿</text>
+  <text x="40" y="152" font-size="12" fill="#5F5E5A">都不知道 → 交替求解</text>
+
+  <text x="720" y="112" font-size="12" fill="#5F5E5A">对极几何：两图之间同一批点</text>
+  <text x="720" y="132" font-size="12" fill="#5F5E5A">的像素偏差模式，本身编码了</text>
+  <text x="720" y="152" font-size="12" fill="#5F5E5A">相对位姿。8 对点就够解。</text>
+
+  <line x1="40" y1="196" x2="900" y2="196" stroke="#D3D1C7" stroke-width="1"/>
+
+  <g>
+    <rect x="40" y="250" width="200" height="112" rx="10" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1"/>
+    <text x="58" y="278" font-size="14" font-weight="600" fill="#2C2C2A">① SIFT 特征</text>
+    <text x="58" y="302" font-size="12" fill="#5F5E5A">找「换个角度还能</text>
+    <text x="58" y="320" font-size="12" fill="#5F5E5A">认出来」的位置</text>
+    <text x="58" y="344" font-size="11" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#185FA5">128 维描述子</text>
+  </g>
+  <line x1="242" y1="306" x2="258" y2="306" stroke="#888780" stroke-width="1.4" marker-end="url(#a3b)"/>
+
+  <g>
+    <rect x="260" y="250" width="200" height="112" rx="10" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1"/>
+    <text x="278" y="278" font-size="14" font-weight="600" fill="#2C2C2A">② 跨图配对</text>
+    <text x="278" y="302" font-size="12" fill="#5F5E5A">近邻搜索 + ratio 0.8</text>
+    <text x="278" y="320" font-size="12" fill="#5F5E5A">RANSAC 剔外点</text>
+    <text x="278" y="344" font-size="11" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#185FA5">overlap 10</text>
+  </g>
+  <line x1="462" y1="306" x2="478" y2="306" stroke="#888780" stroke-width="1.4" marker-end="url(#a3b)"/>
+
+  <g>
+    <rect x="480" y="250" width="200" height="112" rx="10" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1"/>
+    <text x="498" y="278" font-size="14" font-weight="600" fill="#2C2C2A">③ 增量重建</text>
+    <text x="498" y="302" font-size="12" fill="#5F5E5A">种子对 → PnP → 三角化</text>
+    <text x="498" y="320" font-size="12" fill="#5F5E5A">BA 全局微调</text>
+    <text x="498" y="344" font-size="11" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#185FA5">最贵的一步</text>
+  </g>
+  <line x1="682" y1="306" x2="698" y2="306" stroke="#888780" stroke-width="1.4" marker-end="url(#a3b)"/>
+
+  <g>
+    <rect x="700" y="250" width="200" height="112" rx="10" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1"/>
+    <text x="718" y="278" font-size="14" font-weight="600" fill="#2C2C2A">④ 输出</text>
+    <text x="718" y="302" font-size="12" fill="#5F5E5A">每帧 6 个外参 + 内参</text>
+    <text x="718" y="320" font-size="12" fill="#5F5E5A">加稀疏三维点</text>
+    <text x="718" y="344" font-size="11" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#185FA5">60 万点量级</text>
+  </g>
+
+  <text x="40" y="392" font-size="12" fill="#5F5E5A">视频用顺序匹配而非穷举：265 帧两两配对是 3.5 万对，只跟后 10 帧比降到 2650 对，差 13 倍。</text>
+  <text x="40" y="412" font-size="12" fill="#5F5E5A">代价是顺序错了就全错 —— 图片集必须手动指定拍摄顺序。</text>
+</svg>
