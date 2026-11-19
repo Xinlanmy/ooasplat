@@ -43,18 +43,22 @@
 
 **前置**：macOS 15+ / Apple Silicon、Node.js 22.12+、Rust stable、Xcode Command Line Tools。
 
-```bash
-# 1. 准备上游源码与引擎（约 700 MB 下载）
-./tools/setup.sh
+以下命令**在仓库根目录执行**（源码已在仓库里，不需要另外克隆）。
 
-# 2. 启动应用
-./tools/run-dev.sh
+```bash
+# 1. 装前端依赖 + 从官方 dmg 提取四个引擎（约 470 MB 依赖 + 215 MB dmg）
+./replication/tools/setup.sh
+
+# 2. 启动应用（等价于根目录的 ./run-dev.sh）
+./replication/tools/run-dev.sh
 
 # 3. 或者直接用命令行跑一整条链路
-cd ooosplat && ./src-tauri/target/debug/splatstudio generate \
+./src-tauri/target/debug/splatstudio generate \
   ~/path/to/video.mp4 --quality balanced \
   --projects-root "$(pwd)/../splat-projects"
 ```
+
+`--projects-root` 必须是**绝对路径**，且建议放在仓库外的同级目录，避免模型文件混进版本库。
 
 细节见 [`docs/01-复现指南.md`](docs/01-复现指南.md)。**这一步有两个必踩的坑**，`setup.sh` 和 `run-dev.sh` 就是为了绕开它们而写的，原因写在 [`docs/04-踩坑记录.md`](docs/04-踩坑记录.md)。
 
@@ -63,28 +67,47 @@ cd ooosplat && ./src-tauri/target/debug/splatstudio generate \
 ## 目录
 
 ```
-docs/
-  01-复现指南.md      从零到跑通，含引擎提取与验签
-  02-原理拆解.md      SfM → 相机位姿 → 高斯 → 泼溅，配四张示意图
-  03-实测报告.md      四次运行的完整数据与归因分析
-  04-踩坑记录.md      11 个坑，每条含现象 / 根因 / 解法
+replication/            ← 本目录即全部新增内容，上游文件一行未改
+  docs/
+    01-复现指南.md      从零到跑通，含引擎提取与验签
+    02-原理拆解.md      SfM → 相机位姿 → 高斯 → 泼溅，配四张示意图
+    03-实测报告.md      四次运行的完整数据与归因分析
+    04-踩坑记录.md      11 个坑，每条含现象 / 根因 / 解法
 
-tools/
-  setup.sh            装前端依赖 + 从官方 dmg 提取四个引擎并验签
-  run-dev.sh          绕过 prepareBrush 哈希校验的启动脚本
-  preview_ply.py      按 COLMAP 真实位姿渲染 PLY（约 200 行，仅依赖 numpy + Pillow）
-  collect_stats.py    从项目日志汇总指标成 CSV
+  tools/
+    setup.sh            装前端依赖 + 从官方 dmg 提取四个引擎并验签
+    run-dev.sh          绕过 prepareBrush 哈希校验的启动脚本
+    preview_ply.py      按 COLMAP 真实位姿渲染 PLY（仅依赖 numpy + Pillow）
+    collect_stats.py    从项目日志汇总指标成 CSV
 
-results/
-  runs.csv            四次运行的原始指标
-  run-0*.jpg          重建结果 vs 原始帧
+  results/
+    runs.csv            四次运行的原始指标
+    run-0*.jpg          重建结果 vs 原始帧
 
-figures/
-  01-pipeline.svg     三段式链路
-  02-gaussian-anatomy.svg  单个高斯的 62 个 float
-  03-sfm-stages.svg   SfM 四阶段
-  04-split-geometry.svg    分裂的几何与两个守恒量
+  figures/
+    01-pipeline.svg         三段式链路
+    02-gaussian-anatomy.svg 59 个 float 怎么构成一个高斯
+    03-sfm-stages.svg       SfM 四阶段
+    04-split-geometry.svg   分裂与克隆的几何差异
+
+run-dev.sh              ← 仓库根目录唯一的改动：转发到 replication/tools/run-dev.sh
 ```
+
+---
+
+## 与上游同步
+
+本仓库是 fork，上游更新可以直接合进来，**不会冲突**——因为改动全部隔离在 `replication/` 和根目录一个 `run-dev.sh`。
+
+```bash
+git remote add upstream https://github.com/ooolabdev/ooosplat.git   # 只需一次
+git fetch upstream
+git merge upstream/main
+```
+
+唯一的潜在冲突是根目录 `run-dev.sh`，但上游没有这个文件，所以也不会撞。
+
+如果想反过来把修复提给上游（比如 `run-dev.sh` 绕过的那个哈希校验问题），建议按上游的 `CONTRIBUTING.md` 单独开 PR，不要把这个 fork 的文档一起提过去。
 
 ---
 
