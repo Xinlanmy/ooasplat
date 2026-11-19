@@ -4,6 +4,8 @@
 
 本仓库是 OOOSplat 的 fork，fork 自上游 tag `0.8.1`。**所有新增内容都在 `replication/` 目录下**，上游文件除根目录新增一个 `run-dev.sh` 外未作任何修改——这样 `git pull upstream` 永远不会冲突，也能一眼看出哪些内容是复刻记录、哪些是原作者代码。
 
+![三段式链路：抽帧 → 相机重建 → 训练](figures/01-pipeline.svg)
+
 ---
 
 ## 结论先行
